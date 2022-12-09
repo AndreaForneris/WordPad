@@ -75,8 +75,7 @@ namespace clsFile_ns
                 "Documento Office (*.docx;*.docx)|*.docx;*.docx|"
                 + "Tutti i file (*.*)|*.*";
             dlgApri.Title = "WordPad - Apri";
-            dlgApri.InitialDirectory = Environment.GetFolderPath(
-                Environment.SpecialFolder.Desktop);
+            dlgApri.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             DialogResult ris;
             ris = dlgApri.ShowDialog();
             if (ris == DialogResult.OK)

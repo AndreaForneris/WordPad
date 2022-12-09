@@ -47,7 +47,7 @@ namespace WordPad
 
         private void salvaconnomeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            filemanager.salvaConNome(rtxtFoglio.Text);
+            filemanager.salvaConNome(rtbFoglio.Text);
             this.Text = filemanager.getFileNameRelativo() + " - WordPad";
         }
 
@@ -97,7 +97,7 @@ namespace WordPad
                     nomeFile, "WordPad", MessageBoxButtons.YesNoCancel,
                     MessageBoxIcon.Question);
                 if (ris == DialogResult.Yes)
-                    filemanager.salva(rtxtFoglio.Text);
+                    filemanager.salva(rtbFoglio.Text);
                 else if (ris == DialogResult.Cancel)
                     annulla = true;
             }
@@ -113,7 +113,8 @@ namespace WordPad
                 s = filemanager.apri();
                 if (s != "")
                 {
-                    rtxtFoglio.Text = s;
+                    //rtbFoglio.Text = s;
+                    rtbFoglio.LoadFile(filemanager.getFileName());
                     filemanager.Modificato = false;
                 }
                 this.Text = filemanager.getFileNameRelativo() + " - WordPad";
@@ -125,37 +126,37 @@ namespace WordPad
             annulla = controllaModificato();
             if (!annulla)
             {
-                rtxtFoglio.Text = "";
+                rtbFoglio.Text = "";
                 this.Text = "Documento - WordPad";
                 filemanager.Modificato = false;
             }
         }
         private void salva()
         {
-            filemanager.salva(rtxtFoglio.Text);
+            filemanager.salva(rtbFoglio.Text);
             this.Text = filemanager.getFileNameRelativo() + " - WordPad";
         }
 
         private void annulla()
         {
-            rtxtFoglio.Undo();
+            rtbFoglio.Undo();
         }
         private void ripristina()
         {
             //SendKeys.Send("^+z"); //ctrl+z
-            rtxtFoglio.Redo();
+            rtbFoglio.Redo();
         }
         private void taglia()
         {
-            rtxtFoglio.Cut();
+            rtbFoglio.Cut();
         }
         private void copia()
         {
-            rtxtFoglio.Copy();
+            rtbFoglio.Copy();
         }
         private void incolla()
         {
-            rtxtFoglio.Paste();
+            rtbFoglio.Paste();
         }
 
         private void annullaToolStripMenuItem_Click(object sender, EventArgs e)
