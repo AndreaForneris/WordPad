@@ -71,9 +71,10 @@ namespace clsFile_ns
         {
             string testo = "";
             OpenFileDialog dlgApri = new OpenFileDialog();
-            dlgApri.Filter = "Pagina HTML (*.html;*.htm)|*.html;*.htm|" +
-                "Tutti i file (*.*)|*.*";
-            dlgApri.Title = "EditorHTML - Apri";
+            dlgApri.Filter = "Documento WordPad (*.rft;*.rft)|*.rft;*.rft|" +
+                "Documento Office (*.docx;*.docx)|*.docx;*.docx|"
+                + "Tutti i file (*.*)|*.*";
+            dlgApri.Title = "WordPad - Apri";
             dlgApri.InitialDirectory = Environment.GetFolderPath(
                 Environment.SpecialFolder.Desktop);
             DialogResult ris;
@@ -88,9 +89,10 @@ namespace clsFile_ns
         public void salvaConNome(string testo)
         {
             SaveFileDialog dlgSalva = new SaveFileDialog();
-            dlgSalva.Filter = "Pagina HTML (*.html;*.htm)|*.html;*.htm|" +
-                "Tutti i file (*.*)|*.*";
-            dlgSalva.Title = "EditorHTML - Salva";
+            dlgSalva.Filter = "Documento WordPad (*.rft;*.rft)|*.rft;*.rft|" +
+                "Documento Office (*.docx;*.docx)|*.docx;*.docx|"
+                + "Tutti i file (*.*)|*.*";
+            dlgSalva.Title = "WordPad - Salva";
             DialogResult ris;
             ris = dlgSalva.ShowDialog();
             if (ris == DialogResult.OK)
@@ -121,7 +123,7 @@ namespace clsFile_ns
                 s = Filename.Substring(pos + 1);
             }
             else
-                s = "senza nome";
+                s = "Documento";
             return s;
         }
         public string getFileName()
