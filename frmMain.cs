@@ -143,7 +143,7 @@ namespace WordPad
         }
         private void ripristina()
         {
-            //SendKeys.Send("^+z"); //ctrl+z
+            //SendKeys.Send("^+z");
             rtbFoglio.Redo();
         }
         private void taglia()
@@ -208,6 +208,5 @@ namespace WordPad
         {
             incolla();
         }
-
     }
 }
