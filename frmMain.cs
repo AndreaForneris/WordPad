@@ -222,5 +222,10 @@ namespace WordPad
         {
             incolla();
         }
+
+        private void selezionatuttoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbFoglio.SelectAll();
+        }
     }
 }
