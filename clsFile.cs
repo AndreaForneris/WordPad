@@ -67,25 +67,25 @@ namespace clsFile_ns
             }
         }
         //metodi pubblici
-        public string apri()
-        {
-            string testo = "";
-            OpenFileDialog dlgApri = new OpenFileDialog();
-            dlgApri.Filter = "Documento WordPad (*.rft;*.rft)|*.rft;*.rft|" +
-                "Documento Office (*.docx;*.docx)|*.docx;*.docx|"
-                + "Tutti i file (*.*)|*.*";
-            dlgApri.Title = "WordPad - Apri";
-            dlgApri.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            DialogResult ris;
-            ris = dlgApri.ShowDialog();
-            if (ris == DialogResult.OK)
-            {
-                Filename = dlgApri.FileName;
-                testo = leggiFile();
-            }
-            return testo;
-        }
-        public void salvaConNome(string testo)
+        //public string apri()
+        //{
+        //    string testo = "";
+        //    OpenFileDialog dlgApri = new OpenFileDialog();
+        //    dlgApri.Filter = "Documento WordPad (*.rft;*.rft)|*.rft;*.rft|" +
+        //        "Documento Office (*.docx;*.docx)|*.docx;*.docx|"
+        //        + "Tutti i file (*.*)|*.*";
+        //    dlgApri.Title = "WordPad - Apri";
+        //    dlgApri.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        //    DialogResult ris;
+        //    ris = dlgApri.ShowDialog();
+        //    if (ris == DialogResult.OK)
+        //    {
+        //        Filename = dlgApri.FileName;
+        //        testo = leggiFile();
+        //    }
+        //    return testo;
+        //}
+        public void salvaConNome(RichTextBox rtb)
         {
             SaveFileDialog dlgSalva = new SaveFileDialog();
             dlgSalva.Filter = "Documento WordPad (*.rft;*.rft)|*.rft;*.rft|" +
@@ -97,16 +97,18 @@ namespace clsFile_ns
             if (ris == DialogResult.OK)
             {
                 Filename = dlgSalva.FileName;
-                scriviFile(testo);
+                rtb.SaveFile(filename);
             }
         }
-        public void salva(string testo)
+        public void salva(RichTextBox rtb)
         {
             if (modificato)
-                if (filename != "")
-                    scriviFile(testo);
+            {
+                if (filename == "")
+                    salvaConNome(rtb);
                 else
-                    salvaConNome(testo);
+                    rtb.SaveFile(filename);
+            }
         }
         public string getFileNameRelativo()
         {

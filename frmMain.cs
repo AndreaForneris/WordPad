@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WordPad
 {
@@ -47,7 +48,7 @@ namespace WordPad
 
         private void salvaconnomeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            filemanager.salvaConNome(rtbFoglio.Text);
+            filemanager.salvaConNome(rtbFoglio);
             this.Text = filemanager.getFileNameRelativo() + " - WordPad";
         }
 
@@ -97,7 +98,7 @@ namespace WordPad
                     nomeFile, "WordPad", MessageBoxButtons.YesNoCancel,
                     MessageBoxIcon.Question);
                 if (ris == DialogResult.Yes)
-                    filemanager.salva(rtbFoglio.Text);
+                    filemanager.salva(rtbFoglio);
                 else if (ris == DialogResult.Cancel)
                     annulla = true;
             }
@@ -106,18 +107,31 @@ namespace WordPad
         private void apri()
         {
             bool annulla = false;
-            string s;
             annulla = controllaModificato();
             if (!annulla)
             {
-                s = filemanager.apri();
-                if (s != "")
+                OpenFileDialog dlgApri = new OpenFileDialog();
+                dlgApri.Filter = "Documento WordPad (*.rft;*.rft)|*.rft;*.rft|" +
+                    "Documento Office (*.docx;*.docx)|*.docx;*.docx|"
+                    + "Tutti i file (*.*)|*.*";
+                dlgApri.Title = "WordPad - Apri";
+                dlgApri.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                DialogResult ris;
+                ris = dlgApri.ShowDialog();
+                if (ris == DialogResult.OK)
                 {
-                    //rtbFoglio.Text = s;
+                    filemanager.Filename = dlgApri.FileName;
                     rtbFoglio.LoadFile(filemanager.getFileName());
-                    filemanager.Modificato = false;
                 }
                 this.Text = filemanager.getFileNameRelativo() + " - WordPad";
+                //s = filemanager.apri();
+                //if (s != "")
+                //{
+                //    //rtbFoglio.Text = s;
+                //    rtbFoglio.LoadFile(filemanager.getFileName());
+                //    filemanager.Modificato = false;
+                //}
+                //this.Text = filemanager.getFileNameRelativo() + " - WordPad";
             }
         }
         private void nuovo()
@@ -129,11 +143,12 @@ namespace WordPad
                 rtbFoglio.Text = "";
                 this.Text = "Documento - WordPad";
                 filemanager.Modificato = false;
+                filemanager.Filename = "";
             }
         }
         private void salva()
         {
-            filemanager.salva(rtbFoglio.Text);
+            filemanager.salva(rtbFoglio);
             this.Text = filemanager.getFileNameRelativo() + " - WordPad";
         }
 
@@ -143,7 +158,6 @@ namespace WordPad
         }
         private void ripristina()
         {
-            //SendKeys.Send("^+z");
             rtbFoglio.Redo();
         }
         private void taglia()
