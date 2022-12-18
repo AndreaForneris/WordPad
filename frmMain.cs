@@ -1,5 +1,4 @@
 ﻿using clsFile_ns;
-using Es06_EditorHTML;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +14,6 @@ namespace WordPad
 {
     public partial class frmMain : Form
     {
-        clsStampa printManager;
         clsFile filemanager;
 
         public frmMain()
@@ -25,7 +23,6 @@ namespace WordPad
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            printManager = new clsStampa();
             filemanager = new clsFile();
             this.Text = filemanager.getFileNameRelativo() + " - WordPad";
             filemanager.Modificato = false;
@@ -136,9 +133,9 @@ namespace WordPad
         }
         private void nuovo()
         {
-            bool annulla = false;
-            annulla = controllaModificato();
-            if (!annulla)
+            //bool annulla = false;
+            //annulla = controllaModificato();
+            if (!controllaModificato())
             {
                 rtbFoglio.Text = "";
                 this.Text = "Documento - WordPad";
@@ -227,5 +224,76 @@ namespace WordPad
         {
             rtbFoglio.SelectAll();
         }
+
+        private void colorToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                rtbFoglio.SelectionColor = colorDialog1.Color;
+            }
+        }
+
+        private void fontToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                rtbFoglio.SelectionFont = fontDialog1.Font;
+            }
+        }
+
+        private void elencoToolStripButton_Click(object sender, EventArgs e)
+        {
+            rtbFoglio.SelectionBullet = !rtbFoglio.SelectionBullet;
+        }
+
+        private void alToolStripButton_Click(object sender, EventArgs e)
+        {
+            impaginazione("l", 0);
+        }
+
+        private void acToolStripButton_Click(object sender, EventArgs e)
+        {
+            impaginazione("c", 0);
+        }
+
+        private void adToolStripButton_Click(object sender, EventArgs e)
+        {
+            impaginazione("r", 0);
+        }
+
+        private void agToolStripButton_Click(object sender, EventArgs e)
+        {
+            impaginazione("l", 150);
+        }
+
+        private void impaginazione(string al, int mr)
+        {
+            switch (al)
+            {
+                case "r":
+                    rtbFoglio.SelectionAlignment = HorizontalAlignment.Right;
+                    break;
+                case "l":
+                    rtbFoglio.SelectionAlignment = HorizontalAlignment.Left;
+                    break;
+                case "c":
+                    rtbFoglio.SelectionAlignment = HorizontalAlignment.Center;
+                    break;
+                default:
+                    rtbFoglio.SelectionAlignment = HorizontalAlignment.Left;
+                    break;
+            }
+
+            rtbFoglio.SelectionIndent = mr;
+            rtbFoglio.SelectionRightIndent = mr;
+        }
+
+        private void ToolStripButton_Click(object sender, EventArgs e)
+        {
+            AboutBox1 abBox = new AboutBox1();
+            abBox.ShowDialog();
+        }
+
+
     }
 }

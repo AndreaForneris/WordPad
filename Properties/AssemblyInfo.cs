@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set di attributi. Modificare i valori di questi attributi per modificare le informazioni
 // associate a un assembly.
 [assembly: AssemblyTitle("WordPad")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("WordPad - Document Editor è un editor di documenti, che permette di creare semplici testi a formattazione basilare.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WordPad")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyCompany("AF Production")]
+[assembly: AssemblyProduct("WordPad - Document Editor")]
+[assembly: AssemblyCopyright("© Andrea Forneris. Tutti i diritti sono riservati.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
