@@ -28,25 +28,10 @@ namespace WordPad
             filemanager.Modificato = false;
         }
 
-        private void nuovoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            nuovo();
-        }
-
-        private void apriToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            apri();
-        }
-
-        private void salvaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            salva();
-        }
-
-        private void salvaconnomeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            filemanager.salvaConNome(rtbFoglio);
-            this.Text = filemanager.getFileNameRelativo() + " - WordPad";
+            if (controllaModificato() && filemanager.Filename == "")
+                e.Cancel = true;
         }
 
         private void rtxtFoglio_TextChanged(object sender, EventArgs e)
@@ -54,53 +39,184 @@ namespace WordPad
             filemanager.Modificato = true;
         }
 
-        private void esciToolStripMenuItem_Click(object sender, EventArgs e)
+/*---------------------------MenuStrip--------------------------------------*/
+/*File*/
+    /*nuovo*/
+       private void nuovoToolStripMenuItem_Click(object sender, EventArgs e) => nuovo();
+    /*apri*/
+        private void apriToolStripMenuItem_Click(object sender, EventArgs e) => apri();
+    /*salva*/
+        private void salvaToolStripMenuItem_Click(object sender, EventArgs e) => salva();
+    /*salva con nome*/
+        private void salvaconnomeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            filemanager.salvaConNome(rtbFoglio);
+            this.Text = filemanager.getFileNameRelativo() + " - WordPad";
         }
+    /*esci*/
+        private void esciToolStripMenuItem_Click(object sender, EventArgs e) => this.Close();
 
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+/*Modifica*/
+    /*annulla*/
+        private void annullaToolStripMenuItem_Click(object sender, EventArgs e) => annulla();
+    /*ripristina*/
+        private void ripristinaToolStripMenuItem_Click(object sender, EventArgs e) => ripristina();
+    /*taglia*/
+        private void tagliaToolStripMenuItem_Click(object sender, EventArgs e) => taglia();
+    /*copia*/
+        private void copiaToolStripMenuItem_Click(object sender, EventArgs e) => copia();
+    /*incolla*/
+        private void incollaToolStripMenuItem_Click(object sender, EventArgs e) => incolla();
+    /*seleziona tutto*/
+        private void selezionatuttoToolStripMenuItem_Click(object sender, EventArgs e) => rtbFoglio.SelectAll();
+
+/*----------------------------ToolStrip----------------------------------------*/
+    /*nuovo*/
+        private void nuovoToolStripButton_Click(object sender, EventArgs e) => nuovo();
+    /*apri*/
+        private void apriToolStripButton_Click(object sender, EventArgs e) => apri();
+    /*salva*/
+        private void salvaToolStripButton_Click(object sender, EventArgs e) => salva();
+    /*annulla*/
+        private void annullaToolStripButton_Click(object sender, EventArgs e) => annulla();
+    /*ripristina*/
+        private void ripristinaToolStripButton_Click(object sender, EventArgs e) => ripristina();
+    /*taglia*/
+        private void tagliaToolStripButton_Click(object sender, EventArgs e) => taglia();
+    /*copia*/
+        private void copiaToolStripButton_Click(object sender, EventArgs e) => copia();
+    /*incolla*/
+        private void incollaToolStripButton_Click(object sender, EventArgs e) => incolla();
+    /*colore font*/
+        private void colorToolStripButton_Click(object sender, EventArgs e)
         {
-            bool annulla = false;
-            annulla = controllaModificato();
-            if (annulla)
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+                rtbFoglio.SelectionColor = colorDialog1.Color;
+        }
+    /*stile font*/
+        private void fontToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+                rtbFoglio.SelectionFont = fontDialog1.Font;
+        }
+    /*grassetto*/
+        private void fgToolStripButton_Click(object sender, EventArgs e)
+        {
+            try
             {
-                e.Cancel = true;
+                Font new1, old1;
+                old1 = rtbFoglio.SelectionFont;
+                if (old1.Bold)
+                    new1 = new Font(old1, old1.Style & ~FontStyle.Bold);
+                else
+                    new1 = new Font(old1, old1.Style | FontStyle.Bold);
+
+                rtbFoglio.SelectionFont = new1;
+            }
+            catch (Exception)
+            {
             }
         }
-
-        private void nuovoToolStripButton_Click(object sender, EventArgs e)
+    /*corsivo*/
+        private void fcToolStripButton_Click(object sender, EventArgs e)
         {
-            nuovo();
-        }
-        private void apriToolStripButton_Click(object sender, EventArgs e)
-        {
-            apri();
-        }
-
-        private void salvaToolStripButton_Click(object sender, EventArgs e)
-        {
-            salva();
-        }
-
-        private bool controllaModificato()
-        {
-            bool annulla = false;
-            if (filemanager.Modificato)
+            try
             {
-                //chiedo se si vuole salvare il documento aperto
-                string nomeFile = filemanager.getFileName();
-                DialogResult ris;
-                ris = MessageBox.Show("Salvare le modifiche a " +
-                    nomeFile, "WordPad", MessageBoxButtons.YesNoCancel,
-                    MessageBoxIcon.Question);
-                if (ris == DialogResult.Yes)
-                    filemanager.salva(rtbFoglio);
-                else if (ris == DialogResult.Cancel)
-                    annulla = true;
+                Font new1, old1;
+                old1 = rtbFoglio.SelectionFont;
+                if (old1.Underline)
+                    new1 = new Font(old1, old1.Style & ~FontStyle.Italic);
+                else
+                    new1 = new Font(old1, old1.Style | FontStyle.Italic);
+
+                rtbFoglio.SelectionFont = new1;
             }
-            return annulla;
+            catch (Exception)
+            {
+            }
         }
+    /*sottolineato*/
+        private void fsToolStripButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Font new1, old1;
+                old1 = rtbFoglio.SelectionFont;
+                if (old1.Underline)
+                    new1 = new Font(old1, old1.Style & ~FontStyle.Underline);
+                else
+                    new1 = new Font(old1, old1.Style | FontStyle.Underline);
+
+                rtbFoglio.SelectionFont = new1;
+            }
+            catch (Exception)
+            {
+            }
+        }
+    /*barrato*/
+        private void fbToolStripButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Font new1, old1;
+                old1 = rtbFoglio.SelectionFont;
+                if (old1.Underline)
+                    new1 = new Font(old1, old1.Style & ~FontStyle.Strikeout);
+                else
+                    new1 = new Font(old1, old1.Style | FontStyle.Strikeout);
+
+                rtbFoglio.SelectionFont = new1;
+            }
+            catch (Exception)
+            {
+            }
+        }
+    /*allineamento sinistra*/
+        private void alToolStripButton_Click(object sender, EventArgs e)
+        {
+            checkedYN("l");
+            impaginazione("l", 0);
+        }
+    /*allineamento centrato*/
+        private void acToolStripButton_Click(object sender, EventArgs e)
+        {
+            checkedYN("c");
+            if (acToolStripButton.Checked)
+                impaginazione("c", 0);
+            else
+                impaginazione("l", 0);
+        } 
+    /*allineamento destra*/
+        private void adToolStripButton_Click(object sender, EventArgs e)
+        {
+            checkedYN("r");
+            if (adToolStripButton.Checked)
+                impaginazione("r", 0);
+            else
+                impaginazione("l", 0);
+        }
+    /*allineamento giustificato*/
+        private void agToolStripButton_Click(object sender, EventArgs e)
+        {
+            checkedYN("g");
+            if (agToolStripButton.Checked)
+                impaginazione("l", 150);
+            else
+                impaginazione("l", 0);
+        }
+    /*elenco*/
+        private void elencoToolStripButton_Click(object sender, EventArgs e)
+        {
+            rtbFoglio.SelectionBullet = !rtbFoglio.SelectionBullet;
+        }
+    /*info*/
+        private void ToolStripButton_Click(object sender, EventArgs e)
+        {
+            AboutBox1 abBox = new AboutBox1();
+            abBox.ShowDialog();
+        }
+
+/*-----------------------------Sottoprogrammi-------------------------------------*/
         private void apri()
         {
             bool annulla = false;
@@ -121,20 +237,11 @@ namespace WordPad
                     rtbFoglio.LoadFile(filemanager.getFileName());
                 }
                 this.Text = filemanager.getFileNameRelativo() + " - WordPad";
-                //s = filemanager.apri();
-                //if (s != "")
-                //{
-                //    //rtbFoglio.Text = s;
-                //    rtbFoglio.LoadFile(filemanager.getFileName());
-                //    filemanager.Modificato = false;
-                //}
-                //this.Text = filemanager.getFileNameRelativo() + " - WordPad";
             }
         }
+
         private void nuovo()
         {
-            //bool annulla = false;
-            //annulla = controllaModificato();
             if (!controllaModificato())
             {
                 rtbFoglio.Text = "";
@@ -143,127 +250,48 @@ namespace WordPad
                 filemanager.Filename = "";
             }
         }
+
         private void salva()
         {
             filemanager.salva(rtbFoglio);
             this.Text = filemanager.getFileNameRelativo() + " - WordPad";
         }
 
-        private void annulla()
-        {
-            rtbFoglio.Undo();
-        }
-        private void ripristina()
-        {
-            rtbFoglio.Redo();
-        }
-        private void taglia()
-        {
-            rtbFoglio.Cut();
-        }
-        private void copia()
-        {
-            rtbFoglio.Copy();
-        }
-        private void incolla()
-        {
-            rtbFoglio.Paste();
-        }
+        private void annulla() => rtbFoglio.Undo();
 
-        private void annullaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            annulla();
-        }
+        private void ripristina() => rtbFoglio.Redo();
 
-        private void ripristinaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ripristina();
-        }
+        private void taglia() => rtbFoglio.Cut();
 
-        private void annullaToolStripButton_Click(object sender, EventArgs e)
-        {
-            annulla();
-        }
+        private void copia() => rtbFoglio.Copy();
 
-        private void ripristinaToolStripButton_Click(object sender, EventArgs e)
-        {
-            ripristina();
-        }
+        private void incolla() => rtbFoglio.Paste();
 
-        private void tagliaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void checkedYN(string b)
         {
-            taglia();
-        }
-
-        private void copiaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            copia();
-        }
-
-        private void incollaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            incolla();
-        }
-
-        private void tagliaToolStripButton_Click(object sender, EventArgs e)
-        {
-            taglia();
-        }
-
-        private void copiaToolStripButton_Click(object sender, EventArgs e)
-        {
-            copia();
-        }
-
-        private void incollaToolStripButton_Click(object sender, EventArgs e)
-        {
-            incolla();
-        }
-
-        private void selezionatuttoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            rtbFoglio.SelectAll();
-        }
-
-        private void colorToolStripButton_Click(object sender, EventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            switch (b)
             {
-                rtbFoglio.SelectionColor = colorDialog1.Color;
+                case "r":
+                    alToolStripButton.Checked = false;
+                    acToolStripButton.Checked = false;
+                    agToolStripButton.Checked = false;
+                    break;
+                case "l":
+                    adToolStripButton.Checked = false;
+                    acToolStripButton.Checked = false;
+                    agToolStripButton.Checked = false;
+                    break;
+                case "c":
+                    adToolStripButton.Checked = false;
+                    alToolStripButton.Checked = false;
+                    agToolStripButton.Checked = false;
+                    break;
+                case "g":
+                    adToolStripButton.Checked = false;
+                    acToolStripButton.Checked = false;
+                    alToolStripButton.Checked = false;
+                    break;
             }
-        }
-
-        private void fontToolStripButton_Click(object sender, EventArgs e)
-        {
-            if (fontDialog1.ShowDialog() == DialogResult.OK)
-            {
-                rtbFoglio.SelectionFont = fontDialog1.Font;
-            }
-        }
-
-        private void elencoToolStripButton_Click(object sender, EventArgs e)
-        {
-            rtbFoglio.SelectionBullet = !rtbFoglio.SelectionBullet;
-        }
-
-        private void alToolStripButton_Click(object sender, EventArgs e)
-        {
-            impaginazione("l", 0);
-        }
-
-        private void acToolStripButton_Click(object sender, EventArgs e)
-        {
-            impaginazione("c", 0);
-        }
-
-        private void adToolStripButton_Click(object sender, EventArgs e)
-        {
-            impaginazione("r", 0);
-        }
-
-        private void agToolStripButton_Click(object sender, EventArgs e)
-        {
-            impaginazione("l", 150);
         }
 
         private void impaginazione(string al, int mr)
@@ -283,17 +311,26 @@ namespace WordPad
                     rtbFoglio.SelectionAlignment = HorizontalAlignment.Left;
                     break;
             }
-
             rtbFoglio.SelectionIndent = mr;
             rtbFoglio.SelectionRightIndent = mr;
         }
 
-        private void ToolStripButton_Click(object sender, EventArgs e)
+        private bool controllaModificato()
         {
-            AboutBox1 abBox = new AboutBox1();
-            abBox.ShowDialog();
+            bool annulla = false;
+            if (filemanager.Modificato)
+            {
+                string nomeFile = filemanager.getFileName();
+                DialogResult ris;
+                ris = MessageBox.Show("Salvare le modifiche a " +
+                    nomeFile, "WordPad", MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question);
+                if (ris == DialogResult.Yes)
+                    filemanager.salva(rtbFoglio);
+                else if (ris == DialogResult.Cancel)
+                    annulla = true;
+            }
+            return annulla;
         }
-
-
     }
 }

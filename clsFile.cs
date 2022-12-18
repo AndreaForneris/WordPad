@@ -5,86 +5,32 @@ using System.Text;
 using System.Threading.Tasks;
 //
 using System.IO;
-using System.Windows.Forms; //per le finestre di dialogo
+using System.Windows.Forms;
 
 namespace clsFile_ns
 {
     class clsFile
     {
-        //campi privati
         private string filename;
         private bool modificato;
-        //property
+
         public string Filename
         {
-            get
-            {
-                return filename;
-            }
-            set
-            {
-                filename = value;
-            }
+            get{return filename;}
+            set{filename = value;}
         }
         public bool Modificato
         {
-            get
-            {
-                return modificato;
-            }
-            set
-            {
-                modificato = value;
-            }
+            get{return modificato;}
+            set{modificato = value;}
         }
-        //costruttore/i
+
         public clsFile()
         {
             this.Filename = "";
             this.Modificato = false;
         }
-        //metodi privati
-        private string leggiFile()
-        {
-            string testo = "";
-            if (filename != "")
-            {
-                StreamReader sr = new StreamReader(filename);
-                testo = sr.ReadToEnd();
-                sr.Close();
-                modificato = false;
-            }
-            return testo;
-        }
-        private void scriviFile(string testo)
-        {
-            if (filename != "")
-            {
-                StreamWriter sw = new StreamWriter(filename, false);
-                sw.Write(testo);
-                sw.Close();
-                modificato = false;
-            }
-        }
-        //metodi pubblici
-        //public string apri()
-        //{
-        //    string testo = "";
-        //    OpenFileDialog dlgApri = new OpenFileDialog();
-        //    dlgApri.Filter = "Documento WordPad (*.rft;*.rft)|*.rft;*.rft|" +
-        //        "Documento Office (*.docx;*.docx)|*.docx;*.docx|"
-        //        + "Tutti i file (*.*)|*.*";
-        //    dlgApri.Title = "WordPad - Apri";
-        //    dlgApri.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        //    DialogResult ris;
-        //    ris = dlgApri.ShowDialog();
-        //    if (ris == DialogResult.OK)
-        //    {
-        //        Filename = dlgApri.FileName;
-        //        testo = leggiFile();
-        //    }
-        //    return testo;
-        //}
+
         public void salvaConNome(RichTextBox rtb)
         {
             SaveFileDialog dlgSalva = new SaveFileDialog();
@@ -100,6 +46,7 @@ namespace clsFile_ns
                 rtb.SaveFile(filename);
             }
         }
+
         public void salva(RichTextBox rtb)
         {
             if (modificato)
@@ -110,16 +57,12 @@ namespace clsFile_ns
                     rtb.SaveFile(filename);
             }
         }
+
         public string getFileNameRelativo()
         {
-            //ritorna nome file + estensione
             string s = "";
             if (filename != "")
             {
-                //s = Path.GetFileName(Filename);
-                //
-                //oppure
-                //c:\\desktop\\pippo.html
                 int pos = Filename.LastIndexOf('\\');
                 s = Filename.Substring(pos + 1);
             }
@@ -127,9 +70,9 @@ namespace clsFile_ns
                 s = "Documento";
             return s;
         }
+
         public string getFileName()
         {
-            //ritorna il percorso completo
             string s = "";
             if (filename != "")
             {
