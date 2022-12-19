@@ -525,6 +525,7 @@
             // 
             // ToolStripButton
             // 
+            this.ToolStripButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.ToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripButton.Image")));
             this.ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;

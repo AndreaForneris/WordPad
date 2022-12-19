@@ -124,7 +124,7 @@ namespace WordPad
             {
                 Font new1, old1;
                 old1 = rtbFoglio.SelectionFont;
-                if (old1.Underline)
+                if (old1.Italic)
                     new1 = new Font(old1, old1.Style & ~FontStyle.Italic);
                 else
                     new1 = new Font(old1, old1.Style | FontStyle.Italic);
@@ -149,9 +149,7 @@ namespace WordPad
 
                 rtbFoglio.SelectionFont = new1;
             }
-            catch (Exception)
-            {
-            }
+            catch (Exception){}
         }
     /*barrato*/
         private void fbToolStripButton_Click(object sender, EventArgs e)
@@ -160,16 +158,14 @@ namespace WordPad
             {
                 Font new1, old1;
                 old1 = rtbFoglio.SelectionFont;
-                if (old1.Underline)
+                if (old1.Strikeout)
                     new1 = new Font(old1, old1.Style & ~FontStyle.Strikeout);
                 else
                     new1 = new Font(old1, old1.Style | FontStyle.Strikeout);
 
                 rtbFoglio.SelectionFont = new1;
             }
-            catch (Exception)
-            {
-            }
+            catch (Exception){}
         }
     /*allineamento sinistra*/
         private void alToolStripButton_Click(object sender, EventArgs e)
